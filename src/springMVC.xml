@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
+    xmlns:tx="http://www.springframework.org/schema/tx" xmlns:jdbc="http://www.springframework.org/schema/jdbc"
+    xmlns:context="http://www.springframework.org/schema/context"
+    xmlns:mvc="http://www.springframework.org/schema/mvc"
+    xsi:schemaLocation="http://www.springframework.org/schema/jdbc http://www.springframework.org/schema/jdbc/spring-jdbc-3.0.xsd
+        http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.0.xsd
+        http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd
+        http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.0.xsd 
+        http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-3.2.xsd">
+
+
+
+    <context:annotation-config/>
+
+    <context:component-scan base-package="com.how2java.controller">
+          <context:include-filter type="annotation" 
+          expression="org.springframework.stereotype.Controller"/>
+    </context:component-scan>
+    
+	<!-- 如果没有<mvc:annotation-driven/>，那么所有的Controller可能就没有解析，所有当有请求时候都没有匹配的处理请求类，就都去<mvc:default-servlet-handler/>即default 
+		servlet处理了。添加上<mvc:annotation-driven/>后，相应的do请求被Controller处理，而静态资源因为没有相应的Controller就会被default 
+		servlet处理。总之没有相应的Controller就会被default servlet处理就ok了。 -->
+    <mvc:annotation-driven />
+    
+    <mvc:default-servlet-handler />
+
+
+    <bean
+        class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+        <property name="viewClass"
+            value="org.springframework.web.servlet.view.JstlView" />
+        <property name="prefix" value="/WEB-INF/jsp/" />
+        <property name="suffix" value=".jsp" />
+    </bean>
+</beans>
